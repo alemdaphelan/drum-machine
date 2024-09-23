@@ -1,0 +1,129 @@
+#root{
+  max-width:1280px;
+  background-color:#b3b3b3;
+  display:flex;
+  padding:3rem;
+  border:5px solid orange;
+}
+#drum-machine{
+  display: flex;
+  gap:3rem;
+}
+.display{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:10px;
+    grid-template-rows: repeat(3,1fr);
+}
+
+.drum-pad{
+  all:unset;
+  padding:2rem 3rem;
+  background-color:#8d8d8d;
+  color:#000;
+  box-shadow: 5px 5px 5px #000;
+  font-weight:900;
+  font-size:20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.drum-pad:focus{
+  outline: none;
+}
+.drum-pad:active{
+  background:orange;
+}
+.active{
+  background:orange;
+}
+.control-container{
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  gap:1rem;
+  padding:1rem;
+  width:200px;
+}
+
+.power-container{
+  display: flex;
+  place-content: center;
+  place-items: center;
+  text-align: center;
+  flex-direction: column;
+  font-size:16px;
+  font-weight: 900;
+  color:#000;
+  position: relative;
+  width:55px;
+  height:25px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width:100%;
+  height:100%;
+  margin-top:-1rem;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 100vw;
+  display: flex;
+  place-items: center;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  top:2px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+.sound-name{
+  background-color:#8d8d8d;
+  text-align: center;
+  width:100%;
+  height:42px;
+  margin-block:1.5rem;
+  padding-block: .2rem;
+}
+
+.sound-name{
+  color:#000;
+  font-weight:600;
+  display:flex;
+  place-items: center;
+  place-content: center;
+}
