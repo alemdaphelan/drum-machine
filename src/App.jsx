@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useCallback } from 'react';
 import './App.css'
 const dataSound = [
   {
@@ -96,7 +97,7 @@ function App() {
 const PlayButtonContainer = (props) => {
   const [isActive, setIsActive] = useState(null);
 
-  const playSound = (keyTrigger, keyCode) => {
+  const playSound = useCallback((keyTrigger, keyCode) => {
     const audio = document.getElementById(keyTrigger);
     if (audio && props.isChecked) {
       props.handleIndex(keyCode);
@@ -104,31 +105,31 @@ const PlayButtonContainer = (props) => {
       audio.volume = props.volume;
       audio.play();
     }
-  };
-
-
+  }, [props]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-    const key = e.key.toUpperCase();
-    const pad = props.data.find(item => item.keyTrigger === key);
-    if (pad) {
-      playSound(pad.keyTrigger, pad.keyCode);
-      setIsActive(pad.keyTrigger);
-      console.log(key);
-    }
-  };
+      const key = e.key.toUpperCase();
+      const pad = props.data.find(item => item.keyTrigger === key);
+      if (pad) {
+        playSound(pad.keyTrigger, pad.keyCode);
+        setIsActive(pad.keyTrigger);
+        console.log(`Key pressed: ${key}`);
+      }
+    };
 
-  const handleKeyUp = () => {
-    setIsActive(null);
-  };
+    const handleKeyUp = () => {
+      setIsActive(null);
+    };
+
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [props.data]);
+  }, [playSound, props.data]);
 
   return (
     <div className="display">
@@ -140,12 +141,18 @@ const PlayButtonContainer = (props) => {
           onClick={() => playSound(keyTrigger, keyCode)}
         >
           {keyTrigger}
-          <audio id={keyTrigger} src={url} preload='auto' onLoadedData={() => console.log(`${keyTrigger} loaded`)}></audio>
+          <audio 
+            id={keyTrigger} 
+            src={url} 
+            preload='auto' 
+            onLoadedData={() => console.log(`${keyTrigger} loaded`)}
+          ></audio>
         </button>
       ))}
     </div>
   );
 };
+
 
 const ControlButtonContainer = (props) => {
   const [currentVolume, setCurrentVolume] = useState('');
